@@ -21,10 +21,15 @@ def heads_or_tails (table):
     for coin in range(len(table)):
         if (coin == 0):
             tails_counter += 1
-        if (coin == 1):
+        else:
             heads_counter += 1
             
-    ##
+    if (heads_counter == tails_counter):
+        print(heads_counter)
+    elif (heads_counter > tails_counter):
+        print(tails_counter)
+    else:
+        print(heads_counter)
         
         
 
