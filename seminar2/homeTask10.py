@@ -9,7 +9,7 @@ from random import randint as rnd
 
 def distribution ():
     table = []
-    table_limit = int(input("Введите ограничение по максимальному числу монет"))
+    table_limit = int(input("Введите ограничение по максимальному числу монет \n"))
     table_size = rnd(1, table_limit)
     for i in range (table_size):
         table.append(rnd(0,1))
@@ -18,20 +18,26 @@ def distribution ():
 def heads_or_tails (table):
     heads_counter = 0
     tails_counter = 0
-    for coin in range(len(table)):
+    for coin in table: 
         if (coin == 0):
             tails_counter += 1
+#            print(coin, "tails", tails_counter)
         else:
             heads_counter += 1
-            
+#            print(coin, "heads", heads_counter)            
     if (heads_counter == tails_counter):
-        print(heads_counter)
+        return(heads_counter, "(любых)")
     elif (heads_counter > tails_counter):
-        print(tails_counter)
+        return(tails_counter, "с решкой")
     else:
-        print(heads_counter)
+        return(heads_counter, "лежащих орлом вверх")
         
         
 
 table = distribution()
 print(table)
+counter, nominal = heads_or_tails (table)
+# print(nominal)
+# print(counter)
+
+print(f"Нужно перевернуть {counter} монет {nominal}")
