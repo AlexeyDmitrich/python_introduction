@@ -16,7 +16,16 @@ def distribution ():
     return table
 
 def heads_or_tails (table):
-    for coin in table:
+    heads_counter = 0
+    tails_counter = 0
+    for coin in range(len(table)):
+        if (coin == 0):
+            tails_counter += 1
+        if (coin == 1):
+            heads_counter += 1
+            
+    ##
+        
         
 
 table = distribution()
