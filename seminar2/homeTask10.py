@@ -35,9 +35,21 @@ def heads_or_tails (table):
         
 
 table = distribution()
-print(table)
+#print(table)
 counter, nominal = heads_or_tails (table)
 # print(nominal)
 # print(counter)
+
+
+for i in range(int(len(table))):
+    if (table[i] == 1):
+        table[i] = ("О")
+    else:
+        table[i] = ("Р")
+print(table[:4])
+print(table[4:8])
+print(table[8:12])
+print(table[12:16])
+print(table[16:])
 
 print(f"Нужно перевернуть {counter} монет {nominal}")

@@ -32,12 +32,12 @@ def search_nums_2 (set_x):
 
 try:
     x, y = search_nums(x_all, y_all)
-    print("v1: ", x, y)
+    print(f"Перебором найдены подходящие числа: {x} и {y}")
 except:
-    print("V1: Такого решения нет")
+    print("Найти решение перебором не удалось")
 
 try:
     m, n = search_nums_2(x_all)
-    print("v2: ", m, n)
+    print(f"Делением найдены подходящие числа: {m} и {n}")
 except:
-    print("V2: Такого решения нет")
+    print("Найти решение делением не удалось")

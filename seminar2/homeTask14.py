@@ -9,4 +9,5 @@ while (2**ex <= num_N):
     ex_2.append(2**ex)
     ex += 1
 
-print(ex_2)
+for i in range(len(ex_2)):
+    print(f"2 в степени {i} = {ex_2[i]}")
