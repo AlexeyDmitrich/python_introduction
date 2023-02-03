@@ -10,13 +10,6 @@
 from random import randint
 
 n = int(input('Введите размер списка: '))
-
-lst = [randint(1, 10) for i in range(n)]
-print(lst)
-'''
-from random import randint
-
-n = int(input('Введите размер списка: '))
 deck = [randint(1, 10) for i in range(n)]
 print(deck)
 
@@ -35,3 +28,67 @@ for i in range(len(deck)):
             step = 0
             combination += 1
         print(hand)
+'''
+
+from random import randint
+
+n = int(input('Введите размер списка: '))
+deck = [randint(0, 10) for i in range(n)]
+print(deck)
+
+combination = 1
+value = []
+hand = {}
+for i in range(len(deck)):
+    print(f"place {i} : nominal {deck[i]}")
+    for card in deck:
+        print(f" card {card}")
+        step = 1
+        while ((step + deck[i] < len(deck)) and (deck[i] - step >= 0)):
+            print(f"  combination: {combination}\n  step: {step}\n  card nominal: {card}\n  deck[i]-step: {deck[i]-step}\n  deck[i]+step: {deck[i]+step}")
+            value.append(deck[i])
+            if (deck[i] == card-step):
+                print("         TRUE")
+                 
+                value.append(card)
+                step += 1
+            #    continue
+            if (deck[i] == card+step):
+                print("         TRUE")
+            #    value.append(deck[i]) 
+                value.append(card)
+                step += 1
+            #    continue
+            else:
+                print("         FALSE")
+                step = 1 
+                break
+        
+    hand [combination] = set(value)
+    value = []
+    combination += 1
+    print(hand)
+        
+
+    # #    while (card+step < len(deck) and (card+step == card+1 or card+step == card-1)):
+    #         while (step<len(deck) and combination<=len(deck)):
+    #             print(f"  combination: {combination}\n  step: {step}\n  card nominal: {card}\n  deck[i]-step: {deck[i]-step}\n  deck[i]+step: {deck[i]+step}")
+    #             if ((card==deck[i]-step) or (card==deck[i]+step)):
+    #                 print("   TRUE")
+    #                 value.append(card)
+    #                 step += 1
+    #                 print(f"    card appended in value: {value}\n   step up: {step}")
+    #                 hand [combination] = value
+    #                 print(f"       добавлена пара ключ-значение: {hand}")
+    #             #else: 
+    #                 #print(f"{combination}")
+    #                 #continue
+    #             else:
+
+    #                 step = 1
+    #                 print(f"       step reset to {step}")
+    #                 combination += 1
+    #                 print(f"       look at next combination {combination}")
+    #                 continue
+
+
