@@ -53,3 +53,20 @@ print(table[12:16])
 print(table[16:])
 
 print(f"Нужно перевернуть {counter} монет {nominal}")
+###
+demo_limit = 4
+static_limit = demo_limit
+while (len(table)//static_limit != 0):
+	table.append(" ")
+for i in range(int(len(table))):
+    if (table[i] == 1):
+        table[i] = ("О")
+    else:
+        table[i] = ("Р")
+print(table[:demo_limit])
+while (demo_limit <= len(table)):
+	print(table[(demo_limit):(demo_limit+static_limit)])
+	demo_limit += static_limit
+print(table[demo_limit:])
+
+print(f"Нужно перевернуть {counter} монет {nominal}")
