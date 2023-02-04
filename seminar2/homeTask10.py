@@ -6,7 +6,7 @@
 
 from random import randint as rnd
 
-
+# раскладывание монет на стол
 def distribution ():
     table = []
     table_limit = int(input("Введите ограничение по максимальному числу монет \n"))
@@ -15,16 +15,15 @@ def distribution ():
         table.append(rnd(0,1))
     return table
 
+# подсчёт меньшего количества монет
 def heads_or_tails (table):
     heads_counter = 0
     tails_counter = 0
     for coin in table: 
         if (coin == 0):
             tails_counter += 1
-#            print(coin, "tails", tails_counter)
         else:
             heads_counter += 1
-#            print(coin, "heads", heads_counter)            
     if (heads_counter == tails_counter):
         return(heads_counter, "(любых)")
     elif (heads_counter > tails_counter):
@@ -32,41 +31,26 @@ def heads_or_tails (table):
     else:
         return(heads_counter, "лежащих орлом вверх")
         
-        
+# красивое раскладывание монет на стол
+def table_print (table):
+    demo_limit = 4
+    static_limit = demo_limit
+    while (len(table)%static_limit != 0):
+        table.append(" ")
+    else:
+        for i in range(int(len(table))):
+            if (table[i] == 1):
+                table[i] = ("О")
+            if (table[i] == 0):
+                table[i] = ("Р")
+    print(table[:demo_limit])
+    while (demo_limit <= len(table)):
+        print(table[(demo_limit):(demo_limit+static_limit)])
+        demo_limit += static_limit
+    print(table[demo_limit:])
 
+# запуск методов
 table = distribution()
-#print(table)
 counter, nominal = heads_or_tails (table)
-# print(nominal)
-# print(counter)
-
-
-for i in range(int(len(table))):
-    if (table[i] == 1):
-        table[i] = ("О")
-    else:
-        table[i] = ("Р")
-print(table[:4])
-print(table[4:8])
-print(table[8:12])
-print(table[12:16])
-print(table[16:])
-
-print(f"Нужно перевернуть {counter} монет {nominal}")
-###
-demo_limit = 4
-static_limit = demo_limit
-while (len(table)//static_limit != 0):
-	table.append(" ")
-for i in range(int(len(table))):
-    if (table[i] == 1):
-        table[i] = ("О")
-    else:
-        table[i] = ("Р")
-print(table[:demo_limit])
-while (demo_limit <= len(table)):
-	print(table[(demo_limit):(demo_limit+static_limit)])
-	demo_limit += static_limit
-print(table[demo_limit:])
-
+table_print(table)
 print(f"Нужно перевернуть {counter} монет {nominal}")

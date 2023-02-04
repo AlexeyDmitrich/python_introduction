@@ -16,7 +16,7 @@ while not (k == limit-3):
     c = a+b
     k += 1
     
-print(fib)
+# print(fib)
 
 contr_fib = []
 i = 1
@@ -25,7 +25,7 @@ while (i<len(fib)):
     contr_fib.append (fib[-i-1])
     i += 2
 contr_fib.pop(-1)
-print(contr_fib)
+# print(contr_fib)
  
 hyper_fib = []
 for num in contr_fib:

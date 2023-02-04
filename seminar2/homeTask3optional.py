@@ -46,21 +46,25 @@ def proof (predicates_left, predicates_right):
         truthfulness = True
     return truthfulness
     
+    '''
+    Кажется, я что-то упускаю. На одиночной проверке показатель времени был выше, чем в цикле из 100 проверок.
+    '''
+    
 i = 0
 start = tm.time()
 while (i<100):
     left, right = predicates()
     proofed = proof (left, right)
-    print (proofed)
+#    print (proofed)
     if (proofed == False):
         print ("Проверка провалена")
         break
     else:
         i += 1
-        print (f"{i} проверка пройдена")
+#        print (f"{i} проверка пройдена")
         continue
 print ("Все проверки пройдены успешно")
 finish = tm.time()
 long = finish-start
 
-print(long)
+print(f"Времени затрачено: {long} с.")
