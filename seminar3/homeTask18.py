@@ -24,16 +24,16 @@ def find_neighbor_number (array, num):
         if (searched_num == i):
             print("В списке есть и оригинал, если что")
             break
-    for i in range(len(array)):
-        print(f'   iteration:{i}\n   ')
-        if ((searched_num + distance) == array[i]):
-            print(array[i])
-            return array[i]
-        elif ((searched_num - distance) == array[i]):
-            print(array[i])
-            return array[i]
-        else:
-            distance += 1    
+    while True:
+        for i in range(len(array)):
+#            print(f'   index: {i}\n   value: {array[i]}\n   distance: {distance}')
+            if ((searched_num + distance) == array[i]):
+#                print(array[i])
+                return array[i]
+            elif ((searched_num - distance) == array[i]):
+#                print(array[i])
+                return array[i]
+        distance += 1
 
 
 try:
