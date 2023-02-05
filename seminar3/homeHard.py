@@ -28,12 +28,11 @@ for i in range(len(deck)):
             step = 0
             combination += 1
         print(hand)
-'''
-
+########
 from random import randint
 
 n = int(input('Введите размер списка: '))
-deck = [randint(0, 10) for i in range(n)]
+deck = [randint(2, 14) for i in range(n)]
 print(deck)
 
 combination = 1
@@ -44,7 +43,7 @@ for i in range(len(deck)):
     for card in deck:
         print(f" card {card}")
         step = 1
-        while ((step + deck[i] < len(deck)) and (deck[i] - step >= 0)):
+        while (step < len(deck)): # and (i - step >= 0)):
             print(f"  combination: {combination}\n  step: {step}\n  card nominal: {card}\n  deck[i]-step: {deck[i]-step}\n  deck[i]+step: {deck[i]+step}")
             value.append(deck[i])
             if (deck[i] == card-step):
@@ -68,7 +67,7 @@ for i in range(len(deck)):
     value = []
     combination += 1
     print(hand)
-        
+    '''    
 
     # #    while (card+step < len(deck) and (card+step == card+1 or card+step == card-1)):
     #         while (step<len(deck) and combination<=len(deck)):
@@ -92,3 +91,29 @@ for i in range(len(deck)):
     #                 continue
 
 
+from random import randint
+
+n = int(input('Введите размер списка: '))
+deck = [randint(2, 14) for i in range(n)]
+print(deck)
+
+combination = 1
+value = []
+hands = []
+for card in (set(deck)):
+    for i in range(len(set(deck))):
+        
+for card in deck:
+    hands.append(set())
+print (hands)
+print (type(hands[0]))
+print (type(deck))
+print (type(deck[0]))
+
+for i in range(len(deck)):
+    hands[i].add(deck[i])
+    if (deck[i]+1) in deck:
+        hands[i].add(deck[i]+1)
+    if (deck[i]-1) in deck:
+        hands[i].add(deck[i]+1)
+print (hands)
