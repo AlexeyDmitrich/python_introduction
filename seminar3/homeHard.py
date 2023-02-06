@@ -94,28 +94,49 @@ for i in range(len(deck)):
 from random import randint
 
 n = int(input('Введите размер списка: '))
-deck = [randint(2, 14) for i in range(n)]
-print(deck)
+arr = [randint(2, 14) for i in range(n)]
+print(arr)
 
-combination = 1
+
 value = []
 hands = []
-for card in (set(deck)):
-    for i in range(len(set(deck))):
-        deck.append(card)
-        break 
+deck = []
+for card in (set(arr)):
+    deck.append(card)
         
 for card in deck:
     hands.append(set())
 print (hands)
 print (type(hands[0]))
+print (deck)
 print (type(deck))
 print (type(deck[0]))
+# exit()
+# distance = 1
 
 for i in range(len(deck)):
     hands[i].add(deck[i])
-    if (deck[i]+1) in deck:
-        hands[i].add(deck[i]+1)
-    if (deck[i]-1) in deck:
-        hands[i].add(deck[i]+1)
+    print (f"добавлено начало последовательности {deck[i]}")
+    distance_up = 1
+    distance_down = 1
+    print ('дистанция сброшена')
+    for j in range(len(deck)):
+        print (f"ищем el {deck[i]} + dis {distance_up} = {deck[i]+distance_up} в {deck}")
+        if (deck[i]+distance_up) in deck:
+            print ("найдено")
+            hands[i].add(deck[i]+distance_up)
+            print (f"добавляем {deck[i]+distance_up} в {hands[i]}")
+            distance_up += 1
+            print (f"устанавливаем дистанцию увеличения: {distance_up}")
+        print (f"ищем el {deck[i]} - dis {distance_down} =  {deck[i]-distance_down} в {deck}")    
+        if (deck[i]-distance_down) in deck:
+            print ("найдено")
+            hands[i].add(deck[i]-distance_down)
+            print (f"добавляем {deck[i]-distance_down} в {hands[i]}")
+            distance_down += 1
+            print (f"устанавливаем дистанцию уменьшения: {distance_down}")
+
+for 
+
+
 print (hands)
