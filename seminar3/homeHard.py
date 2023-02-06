@@ -64,4 +64,9 @@ for hand in hands:
 print (max_hand)
 
 
-print (f"Возможные последовательности: {max_hands}")
+for hand in max_hands:
+    values = []
+    for i in hand:
+        values.append(i)
+        values.sort()
+    print (f'Возможная последовательность: {values[0]}, {values[-1]}')
