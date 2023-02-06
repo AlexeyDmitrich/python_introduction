@@ -64,4 +64,4 @@ for hand in hands:
 print (max_hand)
 
 
-#print (hands)
+print (f"Возможные последовательности: {max_hands}")
