@@ -102,6 +102,8 @@ value = []
 hands = []
 for card in (set(deck)):
     for i in range(len(set(deck))):
+        deck.append(card)
+        break 
         
 for card in deck:
     hands.append(set())
