@@ -53,7 +53,17 @@ def pack_str_to_lst (lst_str):
     for char in range(len(lst_str)):
         try:
             if type(int(lst_str[char])) == int:
-                depack_arr.append(str(int(lst_str[char]) * lst_str[char+1]))
+                i=1
+                ran=1
+                val=int(lst_str[char])
+                try:
+                    while (type(int(lst_str[char+i])) == int):
+                        val = val*10+int(lst_str[char+i])
+                        i+=1
+                        ran+=1                        
+                except:
+                    depack_arr.append(str(val * lst_str[char+ran]))
+                    char+=ran
         except:
             if char > 0:
                 try:
