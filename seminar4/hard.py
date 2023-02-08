@@ -44,3 +44,26 @@ def full_code (stdin):
 
 users_string = input("Введите строку для кодирования/декодирования:\n")
 print (full_code(users_string))
+
+'''
+test_string = input("Введите строку для декодирования:\n")
+
+def pack_str_to_lst (lst_str):
+    depack_arr = []
+    for char in range(len(lst_str)):
+        try:
+            if type(int(lst_str[char])) == int:
+                depack_arr.append(str(int(lst_str[char]) * lst_str[char+1]))
+        except:
+            if char > 0:
+                try:
+                    if type(int(lst_str[char-1])) != int:
+                        depack_arr.append(lst_str[char])
+                except:
+                    depack_arr.append(lst_str[char])
+            else:
+                depack_arr.append(lst_str[char])
+        print (depack_arr)
+    return depack_arr
+print (pack_str_to_lst(test_string))
+'''
