@@ -77,3 +77,22 @@ def pack_str_to_lst (lst_str):
     return depack_arr
 print (pack_str_to_lst(test_string))
 '''
+
+def pack_str_to_lst (lst_str):
+    depack_arr = [[]]
+    i=0   
+    char = 0
+    for char in range(char, len(lst_str)):
+        if (lst_str[char].isdigit()):
+            while (lst_str[char].isdigit()):
+                depack_arr[i].append (lst_str[char])
+                char+=1
+#            else: 
+            depack_arr.append([lst_str[char]])
+        else:
+            while (lst_str[char].isalpha()):
+                depack_arr[i].append (lst_str[char])
+                char+=1
+            else: 
+                depack_arr.append([])
+        i+=1
