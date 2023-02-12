@@ -42,8 +42,8 @@ def full_code (stdin):
     pure_code = list_to_string (code_list)
     return pure_code
 
-users_string = input("Введите строку для кодирования/декодирования:\n")
-print (full_code(users_string))
+#users_string = input("Введите строку для кодирования/декодирования:\n")
+#print (full_code(users_string))
 
 '''
 test_string = input("Введите строку для декодирования:\n")
@@ -96,3 +96,8 @@ def pack_str_to_lst (lst_str):
             else: 
                 depack_arr.append([])
         i+=1
+    return depack_arr
+
+test_string = "2w4t12v101k"
+print (pack_str_to_lst(test_string))        
+    
