@@ -1,10 +1,10 @@
 # сделать локальный чат-бот с хранилищем данных в формате JSON, как объясняли в приложенной записи буткемпа.
 
-
 import json as js
 
 base_of_skills = [] # список коротких строк
 base_of_vacancis = []  # список списков/словарь (или т.п.). Уместить: должность - скиллы - уровень соответствия
+rate_to_vacancy = {}
 
 def load ():
     try:
@@ -92,8 +92,50 @@ def add_skill ():
 
     ''')
 
-    base_of_skills.append(skill)
+    base_of_skills.append(skill.lower())
     print ('Навык добавлен \n')
+
+def add_vacancy ():
+    print ('''
+    Здесь всё не так просто, как с добавлением навыков, но, если выполнять все подсказки
+    бота - то добавить новую вакансию не составит труда. 
+    ''')
+    name = input('Для начала введите название вакансии: \n')
+    skills = []
+    skill = ' '
+    rate = 0
+    while skill != '':
+        skill = input('''
+        Введите одно из требований к кандидату и нажмите Enter. 
+        Этот вопрос будет задан снова, если требований больше нет,
+        просто нажмите Enter \n''')
+        if skill != '':
+            skills.append(skill.lower())
+        if skill in base_of_skills:
+            rate += 1
+    if rate >= len(skills):
+        print('Есть вероятность, что Вы идеально подходите этой работе. Или она Вам.\n')
+    if rate > len(skills)/2:
+        print('Вы более, чем наполовину обладаете нужными качествами для этой вакансии.\n')
+    if rate > 0:
+        print('Кое-что из того, чего хочет работодатель Вы умеете.\n')
+    base_of_vacancis.append([name, skills, rate])
+    print('Вакансия добавлена! \n')
+
+
+    
+def rate ():
+    for vacancy in base_of_vacancis:
+        rate = 0
+        for skill in vacancy[1]:
+            if skill in base_of_skills:
+                rate += 1
+        rate_to_vacancy [rate] = vacancy
+    print ('Рейтинг компетенций пересчитан.\n')
+    for key, value in rate_to_vacancy.items():
+        print(f"Вакансия: {value[0]} \t Рейтинг: {key} ")
+
+
 
 def wokring ():
     while True:
@@ -113,8 +155,7 @@ def wokring ():
             case '/help':
                 print_help()
             case '/addvac':
-                print ('раздел в разработке')
-                # TODO: function to add vacancy in base_of_vacancis
+                add_vacancy()
             case '/addskill':
                 add_skill()
             case '/allvac':
@@ -124,7 +165,6 @@ def wokring ():
                 print ('раздел в разработке')
                 # TODO: function to print all skills
             case '/rate':
-                print ('раздел в разработке')
-                # TODO: function calc worker rate to job
+                rate()
 
 wokring()
