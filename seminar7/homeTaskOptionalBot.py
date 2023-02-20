@@ -18,7 +18,27 @@ def load ():
             base_of_vacancis = js.load(vac)
             print ('база вакансий загружена\n')
     except:
-        print ("Сохранённый сеанс отсутствует. Это ничего, сейчас создадим.")
+        print ('''
+               Привет! 
+               Похоже, что Вы впервые пользуетесь этим ботом.
+               Он предназначен для помощи в подборе работы, исходя из имеющихся навыков,
+               или для определения недостающих навыков для желаемых вакансий.
+               Бот расчитан на работу с простыми запросами на русском языке, например:
+               \tдобавить вакансию
+               \tстатистика
+               \tстарт
+               \tстоп
+               \tпомоги
+               \tи т.д.
+               Если вдруг он не понял команду - в разделе помощи можно найти команды, которые он точно знает.
+               А ещё можно попытаться переформулировать запрос (это бесплатно).
+               При внесении данных о вакансиях и навыках, бот формирует базу, с помощью которой
+               будет подсказывать Вашу совместимость с какой-либо вакансией. При выходе из бота, он предложит
+               сохранить сеанс. Если это сделать - то при следующем запуске вакансии и навыки останутся в базе.
+               
+               Сохранённый сеанс пока отсутствует. Это ничего, сейчас создадим.
+               
+               ''')
         save()
         print ('Готово, ботом можно пользоваться')
 
@@ -39,15 +59,14 @@ def save ():
         print ("Не удалось сохранить новые вакансии")
     
 def translator (users_text):
-    start = '/startgoпоехалистартвперёдпогнали'
     stop = '/stopстопостановитьхватитпрекратиуйтивыходвыйтизакончитьexitquit'
     help = '/helpmanualпомощьпомочьпомогитемануалсправка'
-    add = 'добавитьвнестидополнитьсоздать'
+    show = 'showviewopenпокажипоказатьпросмотретьпосмотретьвзглянутьоткрытьоткройвсе'
+    add = 'добавитьдобавьвнестивнесидополнитьсоздатьсоздай'
     addvac = '/addvacвакансиивакансиювакант' # тезаурус в разработке
-    addskill = '/addskillопытумениепрактикускиллнавык'  # тезаурус в разработке
-    rate = '/ratestatisticрейтингстатистика' # тезаурус в разработке
-    if str(users_text).lower() in start:
-        return '/start'
+    addskill = '/addskillопытумениеуменияпрактикускиллынавыки'  # тезаурус в разработке
+    rate = '/ratestatisticрейтингстатистикастатистикупроанализируй' # тезаурус в разработке
+
     if str(users_text).lower() in stop:
         return '/stop'
     if str(users_text).lower() in help:
@@ -58,6 +77,17 @@ def translator (users_text):
         if str(users_text).split()[1].lower() in addskill:
             print(str(users_text).split()[1])
             return '/addskill'
+        else:
+            print('не удалось обработать запрос')
+    if str(users_text).split()[0].lower() in show:
+        if str(users_text).split()[1].lower() in addvac:
+            return '/allvac'
+        if str(users_text).split()[1].lower() in addskill:
+            print(str(users_text).split()[1])
+            return '/allskill'
+        if str(users_text).split()[1].lower() in rate:
+            print(str(users_text).split()[1])
+            return '/rate'
         else:
             print('не удалось обработать запрос')
     if str(users_text).lower() in addvac:
@@ -88,18 +118,18 @@ def print_help ():
     
 def add_skill ():
     global base_of_skills
-    skill = input('''
+    print('''
     Этот раздел нужен для добавления своего опыта/навыков/знаний/умений, 
     что там ещё у Вас есть. Очень рекомендую для каждого навыка вызывать 
     эту команду отдельно. Позвольте дать Вам ещё совет: вводите название 
     навыка так, как его указывает работодатель в описании вакансии.
-
-    Введите название Вашего опыта:
-
     ''')
-
-    base_of_skills.append(skill.lower())
-    print ('Навык добавлен \n')
+    skill = ' '
+    while skill != '':
+        skill = input('Введите навык и нажмите enter, \nесли новых навыков больше нет, просто нажмите enter \n')
+        if skill != '':
+            base_of_skills.append(skill.lower())
+            print ('Навык добавлен \n')
 
 def add_vacancy ():
     global base_of_vacancis
@@ -122,9 +152,9 @@ def add_vacancy ():
             rate += 1
     if rate >= len(skills):
         print('Есть вероятность, что Вы идеально подходите этой работе. Или она Вам.\n')
-    if rate > len(skills)/2:
+    elif rate > len(skills)/2:
         print('Вы более, чем наполовину обладаете нужными качествами для этой вакансии.\n')
-    if rate > 0:
+    elif rate > 0:
         print('Кое-что из того, чего хочет работодатель Вы умеете.\n')
     base_of_vacancis.append([name, skills, rate])
     print('Вакансия добавлена! \n')
@@ -154,11 +184,8 @@ def wokring ():
         choise = input("Введите команду \n* или попросите помочь \n")
         choise = translator(choise) # TODO: translator
         match (choise):
-            case '/start':
-                print ('\n \t \t *** Добро пожаловать! ***')
-                load()
             case '/stop':
-                yes = 'давайугуагаможнонаверноехзмбyesyeah'
+                yes = 'сохранитьдавайугуагаможнонаверноехзмбyesyeahsave'
                 request = input("Сохранить сеанс перед выходом?\n")
                 if request.lower() in yes:
                     save()
@@ -172,13 +199,12 @@ def wokring ():
                 add_skill()
             case '/allvac':
                 allpreview(base_of_vacancis)
-                # print ('раздел в разработке')
-                # TODO: function to print all vacancies
-            case '/allskills':
+            case '/allskill':
                 allpreview(base_of_skills)
-                # print ('раздел в разработке')
-                # TODO: function to print all skills
             case '/rate':
                 rate()
 
+
+print ('\n \t \t *** Добро пожаловать! ***')
+load()
 wokring()
