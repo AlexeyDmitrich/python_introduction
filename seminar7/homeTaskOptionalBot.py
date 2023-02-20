@@ -8,6 +8,8 @@ base_of_vacancis = []  # список списков/словарь (или т.�
 rate_to_vacancy = {}
 
 def load ():
+    global base_of_skills
+    global base_of_vacancis
     try:
         with open ('skills.json', 'r', encoding='UTF-8') as sk:
             base_of_skills = js.load(sk)
@@ -21,6 +23,8 @@ def load ():
         print ('Готово, ботом можно пользоваться')
 
 def save ():
+    global base_of_skills
+    global base_of_vacancis
     try:
         with open ('skills.json', 'w', encoding='UTF-8') as sk:
             sk.write (js.dumps (base_of_skills, ensure_ascii=False))
@@ -38,7 +42,7 @@ def translator (users_text):
     start = '/startgoпоехалистартвперёдпогнали'
     stop = '/stopстопостановитьхватитпрекратиуйтивыходвыйтизакончитьexitquit'
     help = '/helpmanualпомощьпомочьпомогитемануалсправка'
-    add = 'добавитьвнестидополнить'
+    add = 'добавитьвнестидополнитьсоздать'
     addvac = '/addvacвакансиивакансиювакант' # тезаурус в разработке
     addskill = '/addskillопытумениепрактикускиллнавык'  # тезаурус в разработке
     rate = '/ratestatisticрейтингстатистика' # тезаурус в разработке
@@ -83,6 +87,7 @@ def print_help ():
     ''')
     
 def add_skill ():
+    global base_of_skills
     skill = input('''
     Этот раздел нужен для добавления своего опыта/навыков/знаний/умений, 
     что там ещё у Вас есть. Очень рекомендую для каждого навыка вызывать 
@@ -97,6 +102,7 @@ def add_skill ():
     print ('Навык добавлен \n')
 
 def add_vacancy ():
+    global base_of_vacancis
     print ('''
     Здесь всё не так просто, как с добавлением навыков, но, если выполнять все подсказки
     бота - то добавить новую вакансию не составит труда. 
@@ -128,6 +134,9 @@ def allpreview (base):
         print (item)
     
 def rate ():
+    global base_of_vacancis
+    global rate_to_vacancy
+    global base_of_skills
     for vacancy in base_of_vacancis:
         rate = 0
         for skill in vacancy[1]:
@@ -136,7 +145,7 @@ def rate ():
         rate_to_vacancy [rate] = vacancy
     print ('Рейтинг компетенций пересчитан.\n')
     for key, value in rate_to_vacancy.items():
-        print(f"Вакансия: {value[0]} \t Рейтинг: {key} ")
+        print(f"Вакансия: {value[0]} \t Рейтинг: {key}/{len(value[1])} ")
 
 
 
