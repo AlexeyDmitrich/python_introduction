@@ -13,7 +13,7 @@ def load ():
             print ('база навыков загружена')
         with open ('vacancy.json', 'r', encoding='UTF-8') as vac:
             base_of_vacancis = js.load(vac)
-            print ('база вакансий загружена')
+            print ('база вакансий загружена\n')
     except:
         print ("Сохранённый сеанс отсутствует. Это ничего, сейчас создадим.")
         save()
@@ -34,40 +34,97 @@ def save ():
         print ("Не удалось сохранить новые вакансии")
     
 def translator (users_text):
-    start = ''
-    stop = ''
-    help = ''
-    addvac = ''
-    addskill = ''
-    rate = ''
-    if str(users_text).lower in start:
+    start = '/startgoпоехалистартвперёдпогнали'
+    stop = '/stopстопостановитьхватитпрекратиуйтивыходвыйтизакончить'
+    help = '/helpmanualпомощьпомочьпомогитемануалсправка'
+    add = 'добавитьвнестидополнить'
+    addvac = '/addvacвакансиивакансиювакант' # тезаурус в разработке
+    addskill = '/addskillопытумениепрактикускиллнавык'  # тезаурус в разработке
+    rate = '/rate' # тезаурус в разработке
+    if str(users_text).lower() in start:
         return '/start'
-    if str(users_text).lower in start:
-        return '/start'
+    if str(users_text).lower() in stop:
+        return '/stop'
+    if str(users_text).lower() in help:
+        return '/help'
+    if str(users_text).split()[0].lower() in add:
+        if str(users_text).split()[1].lower() in addvac:
+            return '/addvac'
+        if str(users_text).split()[1].lower() in addskill:
+            print(str(users_text).split()[1])
+            return '/addskill'
+        else:
+            print('не удалось обработать запрос')
+    if str(users_text).lower() in addvac:
+        return '/addvac'
+    if str(users_text).lower() in addskill:
+        return '/addskill'
+    if str(users_text).lower() in rate:
+        return '/rate'
+    else:
+        print('не удалось обработать запрос')
 
+def print_help ():
+    print('''
+    Бот расчитан на взаимодействие с простыми командами на русском языке,
+    сформулированными одним словом.
+    Но этот метод ещё в разработке, поэтому, вот перечень основных команд,
+    если он не понял по-русски:
+
+    /start \t- начать взаимодействие с ботом
+    /addvac \t- добавить вакансию с требованиями в список вакансий
+    /addskill \t- добавить свой новый опыт (духовный не учитывается)
+    /allvac \t- просмотр имеющихся вакансий
+    /allskills \t- просмотр своего опыта
+    /rate \t- посмотреть совместимость своего опыта с имеющимися вакансиями
+    /stop \t- остановить бота (будет предложено сохранить сеанс)
+    /help \t- показать эту страницу помощи
+    ''')
+    
+def add_skill ():
+    skill = input('''
+    Этот раздел нужен для добавления своего опыта/навыков/знаний/умений, 
+    что там ещё у Вас есть. Очень рекомендую для каждого навыка вызывать 
+    эту команду отдельно. Позвольте дать Вам ещё совет: вводите название 
+    навыка так, как его указывает работодатель в описании вакансии.
+
+    Введите название Вашего опыта:
+
+    ''')
+
+    base_of_skills.append(skill)
+    print ('Навык добавлен \n')
 
 def wokring ():
     while True:
-        choise = input("Введите команду \n")
-        # choise = translator(choice) TODO: translator
+        choise = input("Введите команду \n* или попросите помочь \n")
+        choise = translator(choise) # TODO: translator
         match (choise):
             case '/start':
-                print ('Добро пожаловаться')
+                print ('\n \t \t *** Добро пожаловать! ***')
                 load()
             case '/stop':
-                yes = 'даугуагаможнонаверноеyesyeah'
-                request = input("Сохранить сеанс перед выходом?")
-                if str(request).lower in yes:
+                yes = 'давайугуагаможнонаверноехзмбyesyeah'
+                request = input("Сохранить сеанс перед выходом?\n")
+                if request.lower() in yes:
                     save()
+                print ('До новых встреч!')
                 break
             case '/help':
-                print ('здесь появится раздел помощи')
+                print_help()
             case '/addvac':
                 print ('раздел в разработке')
                 # TODO: function to add vacancy in base_of_vacancis
             case '/addskill':
+                add_skill()
+            case '/allvac':
                 print ('раздел в разработке')
-                # TODO: function to add skill in base_of_skills
+                # TODO: function to print all vacancies
+            case '/allskills':
+                print ('раздел в разработке')
+                # TODO: function to print all skills
             case '/rate':
                 print ('раздел в разработке')
                 # TODO: function calc worker rate to job
+
+wokring()
