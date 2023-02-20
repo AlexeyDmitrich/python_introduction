@@ -166,7 +166,8 @@ def wokring ():
                 # print ('раздел в разработке')
                 # TODO: function to print all vacancies
             case '/allskills':
-                print ('раздел в разработке')
+                allpreview(base_of_skills)
+                # print ('раздел в разработке')
                 # TODO: function to print all skills
             case '/rate':
                 rate()
