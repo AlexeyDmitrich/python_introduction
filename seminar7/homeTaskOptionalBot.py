@@ -36,12 +36,12 @@ def save ():
     
 def translator (users_text):
     start = '/startgoпоехалистартвперёдпогнали'
-    stop = '/stopстопостановитьхватитпрекратиуйтивыходвыйтизакончить'
+    stop = '/stopстопостановитьхватитпрекратиуйтивыходвыйтизакончитьexitquit'
     help = '/helpmanualпомощьпомочьпомогитемануалсправка'
     add = 'добавитьвнестидополнить'
     addvac = '/addvacвакансиивакансиювакант' # тезаурус в разработке
     addskill = '/addskillопытумениепрактикускиллнавык'  # тезаурус в разработке
-    rate = '/rate' # тезаурус в разработке
+    rate = '/ratestatisticрейтингстатистика' # тезаурус в разработке
     if str(users_text).lower() in start:
         return '/start'
     if str(users_text).lower() in stop:
