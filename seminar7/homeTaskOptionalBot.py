@@ -41,6 +41,8 @@ def load ():
                ''')
         save()
         print ('Готово, ботом можно пользоваться')
+        print ('Давайте для начала выясним, что Вы уже умеете?')
+        add_skill()
 
 def save ():
     global base_of_skills
@@ -110,7 +112,7 @@ def print_help ():
     /addvac \t- добавить вакансию с требованиями в список вакансий
     /addskill \t- добавить свой новый опыт (духовный не учитывается)
     /allvac \t- просмотр имеющихся вакансий
-    /allskills \t- просмотр своего опыта
+    /allskill \t- просмотр своего опыта
     /rate \t- посмотреть совместимость своего опыта с имеющимися вакансиями
     /stop \t- остановить бота (будет предложено сохранить сеанс)
     /help \t- показать эту страницу помощи
@@ -167,12 +169,14 @@ def rate ():
     global base_of_vacancis
     global rate_to_vacancy
     global base_of_skills
+    
     for vacancy in base_of_vacancis:
         rate = 0
         for skill in vacancy[1]:
             if skill in base_of_skills:
                 rate += 1
-        rate_to_vacancy [rate] = vacancy
+    
+    rate_to_vacancy [rate] = vacancies
     print ('Рейтинг компетенций пересчитан.\n')
     for key, value in rate_to_vacancy.items():
         print(f"Вакансия: {value[0]} \t Рейтинг: {key}/{len(value[1])} ")
