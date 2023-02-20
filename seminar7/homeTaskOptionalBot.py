@@ -4,6 +4,7 @@ import json as js
 
 base_of_skills = [] # список коротких строк
 base_of_vacancis = []  # список списков/словарь (или т.п.). Уместить: должность - скиллы - уровень соответствия
+# при отдельном пересчете для каждой вакансии - есть ли смысл вводить переменную rate в список значений вакансии?
 rate_to_vacancy = {}
 
 def load ():
@@ -122,7 +123,9 @@ def add_vacancy ():
     base_of_vacancis.append([name, skills, rate])
     print('Вакансия добавлена! \n')
 
-
+def allpreview (base):
+    for item in base: 
+        print (item)
     
 def rate ():
     for vacancy in base_of_vacancis:
@@ -159,7 +162,8 @@ def wokring ():
             case '/addskill':
                 add_skill()
             case '/allvac':
-                print ('раздел в разработке')
+                allpreview(base_of_vacancis)
+                # print ('раздел в разработке')
                 # TODO: function to print all vacancies
             case '/allskills':
                 print ('раздел в разработке')
