@@ -73,17 +73,16 @@ def translator (users_text):
     
     if str(users_text).lower() in stop:
         return '/stop'
-    for i in range(len(users_text)):
-        if str(users_text).split()[i].lower() in help:
-            return '/help'
+
     if str(users_text).split()[0].lower() in add:
         if str(users_text).split()[-1].lower() in addvac:
             return '/addvac'
         if str(users_text).split()[-1].lower() in addskill:
 #            print(str(users_text).split()[-1])
             return '/addskill'
-        else:
-            print('не удалось обработать запрос')
+        # else:
+        #     print('не удалось обработать запрос')
+
     if str(users_text).split()[0].lower() in show:
         if str(users_text).split()[-1].lower() in addvac:
             return '/allvac'
@@ -93,8 +92,15 @@ def translator (users_text):
         if str(users_text).split()[-1].lower() in rate:
 #            print(f"{(str(users_text).split()[-1].upper)}:")
             return '/rate'
-        else:
-            print('не удалось обработать запрос')
+
+    for i in range(len(list((users_text).split()))):
+        # print(str(users_text).split()[i].lower())
+        if str(users_text).split()[i].lower() in help:
+            return '/help'
+
+        # else:
+        #     print('не удалось обработать запрос')
+
     if str(users_text).lower() in addvac:
         return '/addvac'
     if str(users_text).lower() in addskill:
@@ -103,6 +109,7 @@ def translator (users_text):
         return '/rate'
     else:
         print('не удалось обработать запрос')
+        return '/help'
 
 def print_help ():
     print('''
@@ -172,6 +179,7 @@ def rate ():
     global rate_to_vacancy
     global base_of_skills
     
+    rate_to_vacancy.clear()
     for vacancy in base_of_vacancis:
         rate = 0
         key = rate
@@ -197,7 +205,7 @@ def rate ():
 
 def wokring ():
     while True:
-        choise = input("Введите команду \n* или попросите помочь \n")
+        choise = input("\n Введите команду \n (ну или попросите помочь) \n")
         choise = translator(choise) # TODO: translator
         match (choise):
             case '/stop':
