@@ -1,7 +1,8 @@
 import languageModule as lm
 import functions as func
+import telegram as tg
 
-def wokring (choise=''):
+def working (choise=''):
     while True:
 #        choise = input("\n Введите команду \n (ну или попросите помочь) \n")
         choise = lm.translator(choise) # TODO: translator
@@ -11,7 +12,7 @@ def wokring (choise=''):
                 request = input("Сохранить сеанс перед выходом?\n")
                 if request.lower() in yes:
                     func.save()
-                print ('Не забывайте добавлять новые навыки! \n До новых встреч!')
+                print('Не забывайте добавлять новые навыки! \n До новых встреч!')
                 break
             case '/help':
                 func.print_help()

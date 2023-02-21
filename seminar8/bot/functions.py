@@ -1,4 +1,5 @@
 import json as js
+import telegram as tg
 
 base_of_skills = [] # список коротких строк
 base_of_vacancis = []  # список списков/словарь (или т.п.). Уместить: должность - скиллы - уровень соответствия
@@ -17,7 +18,7 @@ def load ():
             base_of_vacancis = js.load(vac)
             print ('база вакансий загружена\n')
     except:
-        print ('''
+        tg.bot.send_message (tg.chat, '''
                Привет! 
                Похоже, что Вы впервые пользуетесь этим ботом.
                Он предназначен для помощи в подборе работы, исходя из имеющихся навыков,
