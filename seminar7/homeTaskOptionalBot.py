@@ -4,7 +4,8 @@ import json as js
 
 base_of_skills = [] # список коротких строк
 base_of_vacancis = []  # список списков/словарь (или т.п.). Уместить: должность - скиллы - уровень соответствия
-# при отдельном пересчете для каждой вакансии - есть ли смысл вводить переменную rate в список значений вакансии?
+# модель вакансии: [название, [навык-1, навык-2, ..., навык-n], рейтинг] рейтинг техническая переменная, которая расчитывается
+# при добавлении вакансии. В случае, если у кандидата есть нужные навыки - бот сообщит ему об этом.
 rate_to_vacancy = {}
 
 def load ():
@@ -62,33 +63,35 @@ def save ():
     
 def translator (users_text):
     stop = '/stopстопостановитьхватитпрекратиуйтивыходвыйтизакончитьexitquit'
-    help = '/helpmanualпомощьпомочьпомогитемануалсправка'
-    show = 'showviewopenпокажипоказатьпросмотретьпосмотретьвзглянутьоткрытьоткройвсе'
+    help = '''/helpmanualпомощьпомочьпомогитемануалсправка 
+    что ты можешь? что ты умеешь?'''
+    show = 'showviewopenпокажипоказатьпросмотретьпосмотретьвзглянутьоткрытьоткройвсесформируй'
     add = 'добавитьдобавьвнестивнесидополнитьсоздатьсоздай'
-    addvac = '/addvacвакансиивакансиювакант' # тезаурус в разработке
-    addskill = '/addskillопытумениеуменияпрактикускиллынавыки'  # тезаурус в разработке
-    rate = '/ratestatisticрейтингстатистикастатистикупроанализируй' # тезаурус в разработке
-
+    addvac = '/addvacвакансиивакансиювакант' 
+    addskill = '/addskillопытумениеуменияпрактикускиллынавыки'  
+    rate = '/ratestatisticрейтингстатистикастатистикупроанализируй' 
+    
     if str(users_text).lower() in stop:
         return '/stop'
-    if str(users_text).lower() in help:
-        return '/help'
+    for i in range(len(users_text)):
+        if str(users_text).split()[i].lower() in help:
+            return '/help'
     if str(users_text).split()[0].lower() in add:
-        if str(users_text).split()[1].lower() in addvac:
+        if str(users_text).split()[-1].lower() in addvac:
             return '/addvac'
-        if str(users_text).split()[1].lower() in addskill:
-            print(str(users_text).split()[1])
+        if str(users_text).split()[-1].lower() in addskill:
+#            print(str(users_text).split()[-1])
             return '/addskill'
         else:
             print('не удалось обработать запрос')
     if str(users_text).split()[0].lower() in show:
-        if str(users_text).split()[1].lower() in addvac:
+        if str(users_text).split()[-1].lower() in addvac:
             return '/allvac'
-        if str(users_text).split()[1].lower() in addskill:
-            print(str(users_text).split()[1])
+        if str(users_text).split()[-1].lower() in addskill:
+#            print(f"{((str(users_text).split()[-1]).upper)}:")
             return '/allskill'
-        if str(users_text).split()[1].lower() in rate:
-            print(str(users_text).split()[1])
+        if str(users_text).split()[-1].lower() in rate:
+#            print(f"{(str(users_text).split()[-1].upper)}:")
             return '/rate'
         else:
             print('не удалось обработать запрос')
@@ -107,7 +110,6 @@ def print_help ():
     сформулированными одним словом.
     Но этот метод ещё в разработке, поэтому, вот перечень основных команд,
     если он не понял по-русски:
-
     /start \t- начать взаимодействие с ботом
     /addvac \t- добавить вакансию с требованиями в список вакансий
     /addskill \t- добавить свой новый опыт (духовный не учитывается)
@@ -172,15 +174,25 @@ def rate ():
     
     for vacancy in base_of_vacancis:
         rate = 0
+        key = rate
+        rate_to_vacancy.setdefault(key,[])
         for skill in vacancy[1]:
             if skill in base_of_skills:
                 rate += 1
-    
-    rate_to_vacancy [rate] = vacancies
-    print ('Рейтинг компетенций пересчитан.\n')
-    for key, value in rate_to_vacancy.items():
-        print(f"Вакансия: {value[0]} \t Рейтинг: {key}/{len(value[1])} ")
+        key = rate
+        rate_to_vacancy.setdefault(key,[])
+        rate_to_vacancy [rate].append(vacancy)
 
+    print ('Рейтинг компетенций пересчитан.\n')
+    #print (rate_to_vacancy)
+    for key, value in rate_to_vacancy.items():
+        for i in range(len(value)):
+            # print(value[i][0])
+            # print(key)
+            print(f"Вакансия: {value[i][0]} \t\t Рейтинг: {key}/{len(value[i][1])} ")
+    
+    # for key in rate_to_vacancy:
+    #     print(f"Вакансия: {rate_to_vacancy[key]} \t Рейтинг: {key}/{len(rate_to_vacancy[key][1])} ")
 
 
 def wokring ():
@@ -193,7 +205,7 @@ def wokring ():
                 request = input("Сохранить сеанс перед выходом?\n")
                 if request.lower() in yes:
                     save()
-                print ('До новых встреч!')
+                print ('Не забывайте добавлять новые навыки! \n До новых встреч!')
                 break
             case '/help':
                 print_help()
