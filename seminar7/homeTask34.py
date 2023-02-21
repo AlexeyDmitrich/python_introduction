@@ -6,3 +6,14 @@
 # от друга пробелами. Стихотворение Винни-Пух вбивает в программу с клавиатуры. В ответе
 # напишите “Парам пам-пам”, если с ритмом все в порядке и “Пам парам”, если с ритмом все не
 # в порядке
+
+
+song = input('введите тестовую фразу\n').split()
+list_len = []
+open_voice = "аяуюоеёэиы"
+
+for phrase in song:
+    list_vowels = [vowels for vowels in phrase if vowels in open_voice] 
+    list_len.append(len(list_vowels))
+
+print("Парам пам-пам" if len(set(list_len)) == 1 else "Пам парам") 
