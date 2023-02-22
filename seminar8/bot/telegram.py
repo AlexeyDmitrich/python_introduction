@@ -3,6 +3,7 @@ import menu
 import json
 import functions as func
 import requests
+import languageModule
 
 try:
     with open ('token.json', 'r', encoding='UTF-8') as tk:
@@ -36,12 +37,31 @@ def start_message(message):
 #    chat=message.from_chat.id
 #    print(f'chat={message.from_chat.id}')
 
+# @bot.message_handler(func=lambda message: True, content_types=['text', 'sticker'])
+# def understand (message):
+#     text = message.text
+#     output = str(menu.working(text))
+#     print(text)
+#     print(output)
+#     bot.send_message(message.chat.id, output)
+
 @bot.message_handler(func=lambda message: True, content_types=['text', 'sticker'])
 def understand (message):
     text = message.text
-    output = str(menu.working(text))
     print(text)
-    print(output)
+    
+    translate = languageModule.translator(text)     # переводим речь в команду для бота
+    # если подходящей команды не нашлось - возвращаем фразу в неизменном виде
+    output = str(menu.working(message.from_user.id, translate)) # команда уходит в меню
+    if output != translate: # если команда что-то вернула, кроме самой себя
+        print(output)       # (для команд, которые есть в меню)
+    else:   # если команды не нашлось
+            # сюда нужно поместить функции для добавления скиллов
+            # для добавления вакансий
+            # AI для поддержания диалога
+                
+        
     bot.send_message(message.chat.id, output)
+
 
 bot.polling()

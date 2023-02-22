@@ -2,7 +2,7 @@ def translator (users_text):
     stop = '/stopстопостановитьхватитпрекратиуйтивыходвыйтизакончитьexitquit'
     help = '''/helpmanualпомощьпомочьпомогитемануалсправка 
     что ты можешь? что ты умеешь?'''
-    show = 'showviewopenпокажипоказатьпросмотретьпосмотретьвзглянутьоткрытьоткройвсесформируй'
+    show = 'showviewopenпокажипоказатьпросмотретьпосмотретьвзглянутьоткрытьоткройвсесформируйвыведивывести'
     add = 'добавитьдобавьвнестивнесидополнитьсоздатьсоздай'
     addvac = '/addvacвакансиивакансиювакант' 
     addskill = '/addskillопытумениеуменияпрактикускиллынавыки'  
@@ -17,8 +17,7 @@ def translator (users_text):
         if str(users_text).split()[-1].lower() in addskill:
 #            print(str(users_text).split()[-1])
             return '/addskill'
-        # else:
-        #     print('не удалось обработать запрос')
+
 
     if str(users_text).split()[0].lower() in show:
         if str(users_text).split()[-1].lower() in addvac:
@@ -35,8 +34,6 @@ def translator (users_text):
         if str(users_text).split()[i].lower() in help:
             return '/help'
 
-        # else:
-        #     print('не удалось обработать запрос')
 
     if str(users_text).lower() in addvac:
         return '/addvac'
@@ -45,5 +42,4 @@ def translator (users_text):
     if str(users_text).lower() in rate:
         return '/rate'
     else:
-        print('не удалось обработать запрос')
-        return '/help'
+        return users_text
