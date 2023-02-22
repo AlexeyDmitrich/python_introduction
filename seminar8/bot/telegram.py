@@ -1,11 +1,12 @@
 import telebot
 import menu
 import json
+import functions as func
 import requests
 
 try:
     with open ('token.json', 'r', encoding='UTF-8') as tk:
-        API_TOKEN = (json.load(tk))[0]
+        API_TOKEN = (json.load(tk))
 except:
     print('Не найден токен')
     new_token = input("Введите новый API-токен")
@@ -27,15 +28,20 @@ def start_message(message):
     bot.send_message(message.chat.id, "добро пожаловать!")
     users.append(message.from_user.id)
     user=message.from_user.id
+    output = func.load(user)
     print(f"user={message.from_user.id}")
 #    print(message)
+    bot.send_message(message.chat.id, output)
+    
 #    chat=message.from_chat.id
 #    print(f'chat={message.from_chat.id}')
 
 @bot.message_handler(func=lambda message: True, content_types=['text', 'sticker'])
 def understand (message):
     text = message.text
-    menu.working(text)
-
+    output = str(menu.working(text))
+    print(text)
+    print(output)
+    bot.send_message(message.chat.id, output)
 
 bot.polling()
