@@ -1,8 +1,8 @@
 import json as js
 
 
-base_of_skills = [] # список коротких строк
-base_of_vacancis = []  # список списков/словарь (или т.п.). Уместить: должность - скиллы - уровень соответствия
+base_of_skills = ["нажимание кнопок", "смотрение в монитор", "стремление к развитию"] # список коротких строк
+base_of_vacancis = [["Deep Learning Специалист", ["ml", "искусственный интеллект", "speech synthesis", "deep learning", "machine learning", "artificial intelligence", "машинное обучение", "voice to lip synch", "ai"], 0]]  # список списков/словарь (или т.п.). Уместить: должность - скиллы - уровень соответствия
 # модель вакансии: [название, [навык-1, навык-2, ..., навык-n], рейтинг] рейтинг техническая переменная, которая расчитывается
 # при добавлении вакансии. В случае, если у кандидата есть нужные навыки - бот сообщит ему об этом.
 rate_to_vacancy = {}
@@ -124,10 +124,16 @@ def add_vacancy ():
     print('Вакансия добавлена! \n')
 
 def allpreview (base):
+    global base_of_vacancis
     res = ''
-    for item in base: 
-        res += str(item)
-        res += '\n'
+    if base == base_of_vacancis:
+        for item in base: 
+            res += str(item[0])
+            res += '\n'
+    else:
+        for item in base: 
+            res += str(item)
+            res += '\n'
     return res
     
 def rate ():
