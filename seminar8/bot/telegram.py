@@ -22,9 +22,11 @@ users = [] # нужен какой-то учёт пользователей
 user = ''
 load_status = False
 dialog = 0 
-# 0 - диалог не начат
-# 1 - ожидание ввода
-# 2 - удержание
+# 0 - стоп
+# 1 - ожидание ввода навыка
+# 2 - ожидание ввода вакансии
+# 3 - ожидание ввода требования
+# 9 - исходящие
 replic = ''
 
 @bot.message_handler(commands=['start'])
@@ -52,10 +54,41 @@ def start_message(message):
 #     print(output)
 #     bot.send_message(message.chat.id, output)
 
-@bot.message_handler(func=lambda message: True, content_types=['text', 'sticker'])
+@bot.message_handler(content_types=['text', 'sticker'])
+def data_input(message):
+    global dialog
+    global replic
+    vacancy = ''
+    need_skill = []
+    if dialog == 1:
+        #bot.send_message(message.chat.id, "введите навык или скажите стоп")
+        if (message.text).lower() != 'стоп':
+            func.base_of_skills.append((message.text).lower())
+        else:
+            dialog = 0 
+            return
+    if dialog == 2: 
+        if (message.text).lower() != 'стоп':
+            vacancy = (message.text).lower
+            replic = 'Введите требования к кандидату'
+            out_say(message, 3)
+            dialog = 3
+        else: 
+            dialog = 0
+            func.add_vacancy(vacancy, need_skill)
+            return
+    if dialog == 3:
+        if (message.text).lower() != 'стоп':
+            need_skill.append((message.text).lower)
+            dialog = 3
+        else:
+            dialog = 2
+            return
+        
 def understand (message):
     global load_status
     global dialog
+    global replic
     if load_status == False:
         user=message.from_user.id
         func.load(user)
@@ -74,33 +107,45 @@ def understand (message):
     else:   # если команды не нашлось
             # сюда нужно поместить функции для добавления скиллов
         if output == '/addskill':
-            dialog = 1
+        #    dialog = 1
         #    bot.send_message(message.chat.id, 'Введите навык \nесли новых навыков больше нет, скажите хватит \n' )
-        if dialog == 1:
-            wait_answer(user, 'Введите навык \nесли новых навыков больше нет, скажите хватит \n')
-            if text.lower == 'хватит':
-                dialog = 0
-                return
-            else:
-                bot.send_message(user, f'{output} вы ввели: {text}')
-                dialog = 2
+            replic = 'Введите навык \nесли новых навыков больше нет, скажите хватит \n'
+            out_say(message, 1)
+        
+        # if dialog == 1:
+        #     # wait_answer(user, 'Введите навык \nесли новых навыков больше нет, скажите хватит \n')
+        #     if text.lower == 'хватит':
+        #         dialog = 0
+        #         return
+        #     else:
+        #         bot.send_message(user, f'{output} вы ввели: {text}')
+        #         dialog = 2
                 
         # для добавления вакансий
+        if output == '/addvac':
+            replic = 'название вакансии: \n'
+            out_say(message, 2)
         # AI для поддержания диалога
                 
         
     bot.send_message(message.chat.id, output)
 
-def wait_answer (user, quest):
+# def wait_answer (user, quest):
+#     global dialog
+#     if dialog == 1:
+#         bot.send_message(user, quest)
+#         user_input = bot.message_handler(func=lambda message: True, content_types=['text', 'sticker'])
+        
+#         print (user_input)
+#         return user_input
+#     if dialog == 2: 
+#         return
+
+def out_say(message, step=0):
     global dialog
-    if dialog == 1:
-        bot.send_message(user, quest)
-        user_input = bot.message_handler(func=lambda message: True, content_types=['text', 'sticker'])
-        
-        print (user_input)
-        return user_input
-    if dialog == 2: 
-        return
-        
+    global replic
+    if dialog == 9:
+        bot.send_message(message.chat.id, replic)
+        dialog = step
 
 bot.polling()

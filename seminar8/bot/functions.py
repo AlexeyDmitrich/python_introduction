@@ -95,23 +95,24 @@ def add_skill ():
             base_of_skills.append(skill.lower())
             print ('Навык добавлен \n')
 
-def add_vacancy ():
+def add_vacancy (name, skills):
     global base_of_vacancis
-    print ('''
-    Здесь всё не так просто, как с добавлением навыков, но, если выполнять все подсказки
-    бота - то добавить новую вакансию не составит труда. 
-    ''')
+    # print ('''
+    # Здесь всё не так просто, как с добавлением навыков, но, если выполнять все подсказки
+    # бота - то добавить новую вакансию не составит труда. 
+    # ''')
     name = input('Для начала введите название вакансии: \n')
-    skills = []
-    skill = ' '
+    skills = skills
+    # skill = ' '
     rate = 0
-    while skill != '':
-        skill = input('''
-        Введите одно из требований к кандидату и нажмите Enter. 
-        Этот вопрос будет задан снова, если требований больше нет,
-        просто нажмите Enter \n''')
-        if skill != '':
-            skills.append(skill.lower())
+    # while skill != '':
+    #     skill = input('''
+    #     Введите одно из требований к кандидату и нажмите Enter. 
+    #     Этот вопрос будет задан снова, если требований больше нет,
+    #     просто нажмите Enter \n''')
+    #     if skill != '':
+    #         skills.append(skill.lower())
+    for skill in skills:
         if skill in base_of_skills:
             rate += 1
     if rate >= len(skills):

@@ -16,6 +16,7 @@ bot = telebot.TeleBot(API_TOKEN)
 
 user = 0
 dialog = 0
+skills = []
 
 #@bot.message_handler(content_types=['text'])
 def output_message(message, say):
@@ -32,21 +33,26 @@ def input_message(message):
 @bot.message_handler(func=lambda message: True, content_types=['text', 'sticker'])
 def understand (message):
     global dialog
+    global skills
     text = message.text
     print(text)
     output = 'вводите пока не скажете стоп'
-    translate = ''
-    if "привет" in text.lower():
-        output_message(message, output)
-        dialog = 2
-        listen = input_message(message)
-        while listen.lower() != 'стоп' and dialog == 1:
-            print (listen)
+    listen = ''
+    if dialog != 0:
+        if "навык" in text.lower():
+            output_message(message, output)
             dialog = 2
-        else: 
+            listen = input_message(message)
+        elif text.lower() != 'стоп' and dialog == 1:
+            print (listen)
+            skills.append(listen)
+            dialog = 2
+        elif (text.lower() == 'стоп'): 
             dialog = 0
             output_message(message, 'вы сказали стоп')
-    bot.send_message(message.chat.id, output)
+#    bot.send_message(message.chat.id, output)
+    else:
+        print(skills)
 
 
 bot.polling()
