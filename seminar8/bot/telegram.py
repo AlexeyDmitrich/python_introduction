@@ -66,24 +66,26 @@ def data_input(message):
             func.base_of_skills.append((message.text).lower())
         else:
             dialog = 0 
-            return
+        #    return
     if dialog == 2: 
         if (message.text).lower() != 'стоп':
             vacancy = (message.text).lower
+            dialog = 9
             replic = 'Введите требования к кандидату'
             out_say(message, 3)
-            dialog = 3
+            
         else: 
             dialog = 0
             func.add_vacancy(vacancy, need_skill)
-            return
+        #    return
     if dialog == 3:
         if (message.text).lower() != 'стоп':
             need_skill.append((message.text).lower)
             dialog = 3
         else:
             dialog = 2
-            return
+        #    return
+    else: understand(message)
         
 def understand (message):
     global load_status
@@ -109,6 +111,7 @@ def understand (message):
         if output == '/addskill':
         #    dialog = 1
         #    bot.send_message(message.chat.id, 'Введите навык \nесли новых навыков больше нет, скажите хватит \n' )
+            dialog = 9
             replic = 'Введите навык \nесли новых навыков больше нет, скажите хватит \n'
             out_say(message, 1)
         
@@ -123,6 +126,7 @@ def understand (message):
                 
         # для добавления вакансий
         if output == '/addvac':
+            dialog = 9
             replic = 'название вакансии: \n'
             out_say(message, 2)
         # AI для поддержания диалога
