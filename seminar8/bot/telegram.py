@@ -27,7 +27,9 @@ dialog = 0
 # 2 - ожидание ввода вакансии
 # 3 - ожидание ввода требования
 # 9 - исходящие
-replic = ''
+replic = 'пустой респонз'
+vacancy = ''
+need_skill = []
 
 @bot.message_handler(commands=['start'])
 def start_message(message):
@@ -58,8 +60,10 @@ def start_message(message):
 def data_input(message):
     global dialog
     global replic
-    vacancy = ''
-    need_skill = []
+    global vacancy
+    print (f'stable vacancy: {vacancy}')
+    global need_skill
+    print (f'need_skill: {need_skill}')
     if dialog == 1:
         #bot.send_message(message.chat.id, "введите навык или скажите стоп")
         if (message.text).lower() != 'стоп':
@@ -67,23 +71,27 @@ def data_input(message):
         else:
             dialog = 0 
         #    return
-    if dialog == 2: 
+    elif dialog == 2: 
         if (message.text).lower() != 'стоп':
-            vacancy = (message.text).lower
+            vacancy = (message.text).lower()
+            print(f'input vacancy: {vacancy}')
             dialog = 9
-            replic = 'Введите требования к кандидату'
+            replic = 'Введите требования к кандидату отдельными сообщениями'
             out_say(message, 3)
             
         else: 
             dialog = 0
             func.add_vacancy(vacancy, need_skill)
         #    return
-    if dialog == 3:
+    elif dialog == 3:
         if (message.text).lower() != 'стоп':
-            need_skill.append((message.text).lower)
+            print(f'input text: {message.text}')
+            need_skill.append((message.text).lower())
             dialog = 3
         else:
-            dialog = 2
+            dialog = 9
+            replic = 'введите название следующей вакансии или скажите стоп, чтобы сохранить'
+            out_say(message, 2)
         #    return
     else: understand(message)
         
@@ -97,7 +105,7 @@ def understand (message):
     
     text = message.text
     print(text)
-    output = ''
+    output = 'ожидаю ввода:'
     translate = ''
     if dialog == 0:
         translate = languageModule.translator(text)     # переводим речь в команду для бота
