@@ -34,13 +34,15 @@ def translator (users_text):
         # print(str(users_text).split()[i].lower())
         if str(users_text).split()[i].lower() in help:
             return '/help'
+        else:
+            if str(users_text).lower() in addvac:
+                return '/addvac'
+            if str(users_text).lower() in addskill:
+                return '/addskill'
+            if str(users_text).lower() in rate:
+                return '/rate'
+            else:
+                return users_text
 
 
-    if str(users_text).lower() in addvac:
-        return '/addvac'
-    if str(users_text).lower() in addskill:
-        return '/addskill'
-    if str(users_text).lower() in rate:
-        return '/rate'
-    else:
-        return users_text
+    

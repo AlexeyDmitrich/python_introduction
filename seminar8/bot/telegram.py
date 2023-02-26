@@ -4,6 +4,7 @@ import json
 import functions as func
 import requests
 import languageModule
+import talkingModule
 
 try:
     with open ('token.json', 'r', encoding='UTF-8') as tk:
@@ -17,6 +18,7 @@ except:
     except:
         print("Не удалось привязать новый токен")
 bot = telebot.TeleBot(API_TOKEN)
+API_URL = 'https://7012.deeppavlov.ai/model'
 
 users = [] # нужен какой-то учёт пользователей
 user = ''
@@ -102,56 +104,48 @@ def understand (message):
     if load_status == False:
         user=message.from_user.id
         func.load(user)
+        load_status = True
     
     text = message.text
     print(text)
     output = 'ожидаю ввода:'
     translate = ''
+    
     if dialog == 0:
         translate = languageModule.translator(text)     # переводим речь в команду для бота
-        # если подходящей команды не нашлось - возвращаем фразу в неизменном виде
-        
+        # если подходящей команды не нашлось - возвращаем фразу в неизменном виде    
         output = str(menu.working(message.from_user.id, translate)) # команда уходит в меню
+    
     if output != translate: # если команда что-то вернула, кроме самой себя
         print(output)       # (для команд, которые есть в меню)
     else:   # если команды не нашлось
-            # сюда нужно поместить функции для добавления скиллов
+
+        # для добавления скиллов:
         if output == '/addskill':
-        #    dialog = 1
-        #    bot.send_message(message.chat.id, 'Введите навык \nесли новых навыков больше нет, скажите хватит \n' )
             dialog = 9
             replic = 'Введите навык \nесли новых навыков больше нет, скажите хватит \n'
             out_say(message, 1)
-        
-        # if dialog == 1:
-        #     # wait_answer(user, 'Введите навык \nесли новых навыков больше нет, скажите хватит \n')
-        #     if text.lower == 'хватит':
-        #         dialog = 0
-        #         return
-        #     else:
-        #         bot.send_message(user, f'{output} вы ввели: {text}')
-        #         dialog = 2
                 
         # для добавления вакансий
-        if output == '/addvac':
+        elif output == '/addvac':
             dialog = 9
             replic = 'название вакансии: \n'
             out_say(message, 2)
+
         # AI для поддержания диалога
-                
-        
+        else:
+            talking(message)
+
     bot.send_message(message.chat.id, output)
 
-# def wait_answer (user, quest):
-#     global dialog
-#     if dialog == 1:
-#         bot.send_message(user, quest)
-#         user_input = bot.message_handler(func=lambda message: True, content_types=['text', 'sticker'])
-        
-#         print (user_input)
-#         return user_input
-#     if dialog == 2: 
-#         return
+def talking(message):
+    quest = talkingModule.vocablary_text(str(message.text.split()))
+    qq = " ".join(quest)
+    data = {'question_raw': [qq]}
+    print(f'запрос: {quest}')
+    res = requests.post(API_URL, json=data, verify=False).json()
+    print(res)
+    bot.send_message(message.chat.id, res)
 
 def out_say(message, step=0):
     global dialog
@@ -159,5 +153,6 @@ def out_say(message, step=0):
     if dialog == 9:
         bot.send_message(message.chat.id, replic)
         dialog = step
+
 
 bot.polling()
