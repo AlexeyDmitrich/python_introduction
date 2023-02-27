@@ -124,15 +124,21 @@ def understand (message):
 
         # AI для поддержания диалога
         else:
-            talking(message)
-
-    bot.send_message(message.chat.id, output)
+            try:
+                talking(message)
+            except: 
+                bot.send_message(message.chat.id, f'Запрос: {output} \n не получилось обработать')
 
 def talking(message):
-    quest = talkingModule.vocablary_text(str(message.text.split()))
-    qq = " ".join(quest)
-    data = {'question_raw': [qq]}
-    print(f'запрос: {quest}')
+    quest = talkingModule.vocablary_text(str(message.text))
+    print(quest)
+    qq = ""
+    for word in quest:
+        qq = str(qq + word)
+    print (qq)
+#    qq = " ".join(quest)
+    data = {"question_raw":[qq]}
+    print(f'запрос: {data}')
     res = requests.post(API_URL, json=data, verify=False).json()
     print(res)
     bot.send_message(message.chat.id, res)
