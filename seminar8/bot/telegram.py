@@ -46,47 +46,37 @@ def start_message(message):
     print(f"user={message.from_user.id}")
 #    print(message)
     bot.send_message(message.chat.id, output)
-    
-#    chat=message.from_chat.id
-#    print(f'chat={message.from_chat.id}')
-
-# @bot.message_handler(func=lambda message: True, content_types=['text', 'sticker'])
-# def understand (message):
-#     text = message.text
-#     output = str(menu.working(text))
-#     print(text)
-#     print(output)
-#     bot.send_message(message.chat.id, output)
 
 @bot.message_handler(content_types=['text', 'sticker'])
 def data_input(message):
     global dialog
     global replic
     global vacancy
-    print (f'stable vacancy: {vacancy}')
+#    print (f'stable vacancy: {vacancy}')
     global need_skill
-    print (f'need_skill: {need_skill}')
+#    print (f'need_skill: {need_skill}')
+    
     if dialog == 1:
-        #bot.send_message(message.chat.id, "введите навык или скажите стоп")
-        if (message.text).lower() != 'стоп':
+        if languageModule.translator((message.text).lower()) != '/stop':
             func.base_of_skills.append((message.text).lower())
         else:
+            bot.send_message(message.chat.id, 'я постараюсь запомнить эти навыки')
             dialog = 0 
-        #    return
+
     elif dialog == 2: 
-        if (message.text).lower() != 'стоп':
+        if languageModule.translator((message.text).lower()) != '/stop':
             vacancy = (message.text).lower()
             print(f'input vacancy: {vacancy}')
             dialog = 9
             replic = 'Введите требования к кандидату отдельными сообщениями'
-            out_say(message, 3)
-            
+            out_say(message, 3)            
         else: 
+            bot.send_message(message.chat.id, 'записал')
             dialog = 0
             func.add_vacancy(vacancy, need_skill)
-        #    return
+
     elif dialog == 3:
-        if (message.text).lower() != 'стоп':
+        if languageModule.translator((message.text).lower()) != '/stop':
             print(f'input text: {message.text}')
             need_skill.append((message.text).lower())
             dialog = 3
@@ -94,7 +84,7 @@ def data_input(message):
             dialog = 9
             replic = 'введите название следующей вакансии или скажите стоп, чтобы сохранить'
             out_say(message, 2)
-        #    return
+
     else: understand(message)
         
 def understand (message):
@@ -123,7 +113,7 @@ def understand (message):
         # для добавления скиллов:
         if output == '/addskill':
             dialog = 9
-            replic = 'Введите навык \nесли новых навыков больше нет, скажите хватит \n'
+            replic = 'Введите навык \nесли новых навыков больше нет, скажите стоп \n'
             out_say(message, 1)
                 
         # для добавления вакансий
