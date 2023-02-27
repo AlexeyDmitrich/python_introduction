@@ -47,7 +47,7 @@ def start_message(message):
 #    print(message)
     bot.send_message(message.chat.id, output)
 
-@bot.message_handler(content_types=['text', 'sticker'])
+@bot.message_handler(content_types=['text'])
 def data_input(message):
     global dialog
     global replic
@@ -59,6 +59,9 @@ def data_input(message):
     if dialog == 1:
         if languageModule.translator((message.text).lower()) != '/stop':
             func.base_of_skills.append((message.text).lower())
+            if (message.text).lower() == 'гениальность':
+                bot.send_sticker(message.chat.id, 'CAACAgIAAxkBAAIDfGP8x7p_xx1of1dE_Tft16jDoBI8AAJGIwACZ1aZSQfInwNd_rM3LgQ')
+                bot.send_message(message.chat.id, 'Простите. Продолжайте.')
         else:
             menu.working(message.from_user.id, '/stop')
             bot.send_message(message.chat.id, 'я постараюсь запомнить эти навыки')
@@ -165,5 +168,9 @@ def out_say(message, step=0):
         bot.send_message(message.chat.id, replic)
         dialog = step
 
+@bot.message_handler(content_types=['sticker'])
+def data_input(message):
+    print(message.sticker.file_id)
+    
 
 bot.polling()
