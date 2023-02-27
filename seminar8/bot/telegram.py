@@ -107,7 +107,8 @@ def understand (message):
         output = str(menu.working(message.from_user.id, translate)) # команда уходит в меню
     
     if output != translate: # если команда что-то вернула, кроме самой себя
-        print(output)       # (для команд, которые есть в меню)
+        print(output)
+        bot.send_message(message.chat.id, output)       # (для команд, которые есть в меню)
     else:   # если команды не нашлось
 
         # для добавления скиллов:
@@ -124,6 +125,7 @@ def understand (message):
 
         # AI для поддержания диалога
         else:
+#            bot.send_message(message.chat.id, output)
             try:
                 talking(message)
             except: 
@@ -139,7 +141,10 @@ def talking(message):
 #    qq = " ".join(quest)
     data = {"question_raw":[qq]}
     print(f'запрос: {data}')
-    res = requests.post(API_URL, json=data, verify=False).json()
+    try:
+        res = requests.post(API_URL, json=data, verify=False).json()
+    except:
+        bot.send_message(message.chat.id, f'Запрос: "{qq}" не получилось обработать')
     print(res)
     bot.send_message(message.chat.id, res)
 
