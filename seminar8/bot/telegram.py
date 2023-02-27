@@ -60,6 +60,7 @@ def data_input(message):
         if languageModule.translator((message.text).lower()) != '/stop':
             func.base_of_skills.append((message.text).lower())
         else:
+            menu.working(message.from_user.id, '/stop')
             bot.send_message(message.chat.id, 'я постараюсь запомнить эти навыки')
             dialog = 0 
 
@@ -71,6 +72,7 @@ def data_input(message):
             replic = 'Введите требования к кандидату отдельными сообщениями'
             out_say(message, 3)            
         else: 
+            menu.working(message.from_user.id, '/stop')
             bot.send_message(message.chat.id, 'записал')
             dialog = 0
             func.add_vacancy(vacancy, need_skill)
