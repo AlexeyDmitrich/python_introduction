@@ -147,6 +147,10 @@ def understand (message):
                 dialog = 9
                 replic = "Загружены демонстрационные вакансии"
                 out_say(message, 0)
+            
+            #для удаления навыков:
+#            elif output == '/delskill':
+                
 
             # AI для поддержания диалога
             else:

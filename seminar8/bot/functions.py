@@ -126,6 +126,17 @@ def add_vacancy (name, skills):
     base_of_vacancis.append([name, skills, rate])
     print('Вакансия добавлена! \n')
 
+def delskill(skill):
+    global base_of_skills
+    base_of_skills.remove(skill)
+    
+def delvac(vac):
+    global base_of_vacancis
+    for vacancy in base_of_vacancis:
+        if vacancy[0] == vac:
+            base_of_vacancis.remove(vacancy)
+            
+
 def allpreview (base):
     global base_of_vacancis
     res = ''
