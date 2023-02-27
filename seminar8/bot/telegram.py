@@ -72,10 +72,11 @@ def data_input(message):
             replic = 'Введите требования к кандидату отдельными сообщениями'
             out_say(message, 3)            
         else: 
-            menu.working(message.from_user.id, '/stop')
+            
             bot.send_message(message.chat.id, 'записал')
             dialog = 0
             func.add_vacancy(vacancy, need_skill)
+            menu.working(message.from_user.id, '/stop')
 
     elif dialog == 3:
         if languageModule.translator((message.text).lower()) != '/stop':
@@ -124,6 +125,13 @@ def understand (message):
             dialog = 9
             replic = 'название вакансии: \n'
             out_say(message, 2)
+
+        elif output == '/demo':
+            with open (f'vacancy.json', 'r', encoding='UTF-8') as vac:
+                func.base_of_vacancis = json.load(vac)
+            dialog = 9
+            replic = "Загружены демонстрационные вакансии"
+            out_say(message, 0)
 
         # AI для поддержания диалога
         else:
